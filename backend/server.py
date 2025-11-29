@@ -79,6 +79,7 @@ async def upload_single_pdf(file: UploadFile, label: str):
 
     finally:
         shutil.rmtree(tmpdir, ignore_errors=True)
+        
 @app.get("/")
 def home():
     return {
@@ -114,6 +115,7 @@ async def chat_dual(req: DualChatRequest):
             - Use only these names
             - Never mention tmp files
             - Be structured, precise, factual
+            - used plain and deceent text not used mardown as well as any symbols
 
             Compare content, structure, themes, and differences.
         """

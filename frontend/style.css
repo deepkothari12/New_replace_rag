@@ -1,0 +1,90 @@
+body {
+    font-family: Inter, Arial, sans-serif;
+    background: #f7f8fa;
+    margin: 0;
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-card {
+    background: #fff;
+    padding: 30px;
+    width: 400px;
+    border-radius: 14px;
+}
+
+.upload-row {
+    margin: 15px 0;
+}
+
+.upload-row label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+button {
+    width: 100%;
+    background: #3ecf8e;
+    border: none;
+    color: white;
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.status {
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Main page */
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 60px 20px;
+    display: none;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.chat-box {
+    display: flex;
+    gap: 10px;
+}
+
+.chat-box input {
+    flex: 1;
+    padding: 14px;
+    font-size: 16px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+}
+
+.chat-box button {
+    width: 60px;
+}
+
+.answer-box {
+    margin-top: 30px;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+pre {
+    white-space: pre-wrap;
+    font-family: inherit;
+}

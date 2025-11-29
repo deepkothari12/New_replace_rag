@@ -1,3 +1,4 @@
+## Main - File ##
 import os
 import streamlit as st
 from google import genai
@@ -5,17 +6,19 @@ from google.genai import types
 from dotenv import load_dotenv
 import time
 import tempfile
-import shutil
+import shutil   
+# Load environment variables from .env file
 
 load_dotenv()
 
-try:
+try:       
     client = genai.Client()
 except Exception as e:
     st.error(f"Failed to initialize Gemini client: {str(e)}")
     st.stop()
 
 st.title("File Comparison Chatbot")
+st.text("Upload two PDF documents of 40 MBs")
 
 st.subheader("Upload PDF A")
 pdf_a = st.file_uploader("Upload first PDF", type=["pdf"], key="pdf_a")
@@ -30,11 +33,11 @@ def upload_pdf_to_store(uploaded_file, label):
     Uses the ORIGINAL file name so Gemini doesn't see random tmp names.
     """
     if uploaded_file is None:
-        return None
+        return None         
 
     tmpdir = None
     temp_path = None
-    store_name = None
+    store_name = None 
 
     try:
         #  size check
@@ -43,17 +46,17 @@ def upload_pdf_to_store(uploaded_file, label):
             st.error(f"{label}: File size exceeds 50MB limit")
             return None
 
-        # Create a temp directory and save with ORIGINAL filename
+        # Create a temp director y and save with ORIGINAL filename
         tmpdir = tempfile.mkdtemp()
         original_name = uploaded_file.name or f"{label}.pdf"
         temp_path = os.path.join(tmpdir, original_name)
 
         with open(temp_path, "wb") as f:
-            # getbuffer() avoids re-reading multiple times
+            # getbuffer() used for avoids re-reading multiple times
             f.write(uploaded_file.getbuffer())
 
         st.info(f"{label}: Temporary file created as {original_name}")
-
+ 
         # Create File Search store
         try:
             store = client.file_search_stores.create()
@@ -69,13 +72,14 @@ def upload_pdf_to_store(uploaded_file, label):
                 file_search_store_name=store_name,
                 file=temp_path,  # path with the REAL filename
             )
+    
         except Exception as e:
             st.error(f"{label}: Failed to initiate upload - {str(e)}")
             return None
-
+                
         # Poll for upload completion
         attempt = 1
-        max_attempts = 20  # Prevent infinite loop
+        max_attempts = 120  # Prevent infinite loop 
 
         with st.spinner(f"Uploading {label}..."):
             while attempt <= max_attempts:
@@ -87,7 +91,7 @@ def upload_pdf_to_store(uploaded_file, label):
                         return None
 
                     if op.done:
-                        st.success(f"{label}: Upload complete ✓")
+                        st.success(f"{label}: Upload complete ")
                         return store_name
 
                     time.sleep(min(30, 5 * attempt))
@@ -114,7 +118,6 @@ def upload_pdf_to_store(uploaded_file, label):
         except Exception as e:
             st.warning(f"{label}: Could not fully delete temp files - {str(e)}")
 
-
 # Initialize session state for store names
 if 'store_a' not in st.session_state:
     st.session_state.store_a = None
@@ -126,11 +129,12 @@ if pdf_a and st.session_state.store_a is None:
     st.session_state.store_a = upload_pdf_to_store(pdf_a, "PDF A")
 
 if pdf_b and st.session_state.store_b is None:
-    st.session_state.store_b = upload_pdf_to_store(pdf_b, "PDF B")
+    st.session_state.store_b = upload_pdf_to_store(pdf_b, "PDF B") 
+
 
 # Only proceed when both PDFs are uploaded successfully
 if st.session_state.store_a and st.session_state.store_b:
-    st.success("Both PDFs uploaded successfully! ✓")
+    st.success("Both PDFs uploaded successfully! ")
 
     # Human-friendly names for the prompt
     doc_a_name = pdf_a.name if pdf_a else "Document A"
@@ -173,7 +177,7 @@ if st.session_state.store_a and st.session_state.store_b:
                 - Data or figures that differ
                 - Any missing or additional information
                 """
-
+            
                 full_prompt = f"{system_prompt}\n\nUser Question: {question}"
 
                 with st.spinner("Analyzing documents..."):

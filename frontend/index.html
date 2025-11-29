@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Document Comparison</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <!-- Upload Modal -->
+    <div class="modal" id="uploadModal">
+        <div class="modal-card">
+            <h2>Upload Documents for Comparison</h2>
+            <p>Upload two PDF documents to compare and analyze their differences.</p>
+
+            <div class="upload-row">
+                <label>PDF A</label>
+                <input type="file" id="fileA" accept="application/pdf" />
+            </div>
+
+            <div class="upload-row">
+                <label>PDF B</label>
+                <input type="file" id="fileB" accept="application/pdf" />
+            </div>
+
+            <button id="uploadBtn">Upload & Process</button>
+            <div class="status" id="uploadStatus"></div>
+        </div>
+    </div>
+
+    <!-- Main Page -->
+    <div class="container" id="mainPage">
+        <header>
+            <h1>Compare & Analyze Documents</h1>
+            <p>Ask questions to understand the differences between your documents</p>
+        </header>
+
+        <div class="chat-box">
+            <input type="text" id="questionInput" placeholder="Ask anything..." />
+            <button id="askBtn">→</button>
+        </div>
+
+        <div class="answer-box">
+            <h3>Answer</h3>
+            <pre id="answer"></pre>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
