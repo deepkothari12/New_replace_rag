@@ -1,4 +1,5 @@
-const API_BASE = "http://localhost:4000";
+const API_BASE = "https://fileanalyzerr.onrender.com"
+// "http://localhost:4000";
 
 let storeIdA, storeIdB, filenameA, filenameB;
 

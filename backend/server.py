@@ -12,7 +12,6 @@ from google.genai import types
 
 
 load_dotenv()
-
 app = FastAPI()
 
 app.add_middleware(
